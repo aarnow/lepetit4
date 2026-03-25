@@ -105,7 +105,39 @@ export function initPeer(PeerClass) {
     _myId = Math.random().toString(36).slice(2, 6).toUpperCase()
         + Math.random().toString(36).slice(2, 6).toUpperCase();
 
-    _peer = new PeerClass(_myId);
+    // Configuration PeerJS pour fonctionner en production (GitHub Pages, HTTPS…).
+    //
+    // Problème courant : le serveur public par défaut (0.peerjs.com) est parfois
+    // bloqué ou rate-limité depuis des domaines HTTPS externes.
+    //
+    // Solution : configurer explicitement
+    //   - host/port/path  → serveur de signaling PeerJS public stable
+    //   - iceServers      → serveurs STUN de Google pour traverser les NAT/pare-feux
+    //
+    // Les serveurs STUN permettent à chaque pair de découvrir son IP publique
+    // et de négocier la traversée du réseau. Sans eux, la connexion P2P échoue
+    // souvent derrière un routeur ou un réseau d'entreprise.
+    _peer = new PeerClass(_myId, {
+        // Serveur de signaling PeerJS (échange des métadonnées ICE avant la connexion P2P)
+        host:   '0.peerjs.com',
+        port:   443,          // HTTPS obligatoire sur GitHub Pages
+        path:   '/',
+        secure: true,         // forcer WSS (WebSocket sécurisé)
+
+        // Serveurs STUN/TURN — utilisés par WebRTC pour traverser les NAT
+        // On liste plusieurs serveurs pour maximiser la fiabilité
+        config: {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302'  },
+                { urls: 'stun:stun1.l.google.com:19302' },
+                { urls: 'stun:stun2.l.google.com:19302' },
+                { urls: 'stun:stun3.l.google.com:19302' },
+            ],
+            iceCandidatePoolSize: 10, // pré-collecter les candidats ICE pour accélérer la connexion
+        },
+
+        debug: 0, // 0 = silencieux, 1 = erreurs, 2 = warnings, 3 = verbose
+    });
 
     // ── Peer prêt : serveur de signaling joignable ────────────
     _peer.on('open', () => {
