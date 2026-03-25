@@ -71,7 +71,7 @@
         <span class="text-p4-muted text-xs tracking-widest uppercase">Votre ID</span>
         <div class="flex items-center justify-between">
             <span id="my-id" class="font-mono text-2xl font-bold tracking-widest text-p4-text">—</span>
-            <button id="btn-copy" onclick="copyId()"
+            <button id="btn-copy" onclick="uiCopyId()"
                     class="text-xs text-p4-muted border border-p4-border px-3 py-1 hover:border-p4-border2 hover:text-p4-text2 transition-colors">
                 copier
             </button>
@@ -81,7 +81,7 @@
     <!-- Actions -->
     <div class="flex flex-col gap-2">
 
-        <button id="btn-host" onclick="hostGame()"
+        <button id="btn-host" onclick="uiHostGame()"
                 class="w-full bg-p4-text text-white py-3 px-4 text-sm font-bold tracking-wide hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
                 disabled>
             Créer une partie
@@ -96,7 +96,7 @@
             <div class="flex gap-2">
                 <input id="host-id-input" type="text" maxlength="8" placeholder="ID de l'hôte..."
                        class="flex-1 bg-p4-bg border border-p4-border px-3 py-2 text-sm font-mono text-p4-text placeholder-p4-muted outline-none focus:border-p4-border2 transition-colors uppercase" />
-                <button onclick="joinGame()"
+                <button onclick="uiJoinGame()"
                         class="px-5 py-2 bg-p4-blue text-white text-sm font-bold hover:opacity-90 transition-opacity">
                     JOIN
                 </button>
@@ -126,7 +126,7 @@
                 P2P LOG
                 <span id="p2p-badge" class="hidden bg-p4-text text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center leading-none">0</span>
             </button>
-            <button onclick="quitGame()"
+            <button onclick="uiQuitGame()"
                     class="text-xs border border-p4-border bg-p4-surface px-3 py-1.5 text-p4-text2 hover:border-p4-red hover:text-p4-red transition-colors">
                 ✕ Quitter
             </button>
@@ -170,7 +170,7 @@
         <!-- Vue : résultat (cachée au départ) -->
         <div id="banner-result" class="hidden flex items-center justify-between gap-4 py-3 px-4">
             <span id="result-text" class="font-display text-2xl font-extrabold"></span>
-            <button id="btn-rematch" onclick="requestRematch()"
+            <button id="btn-rematch" onclick="uiRequestRematch()"
                     class="text-sm border px-4 py-2 font-mono transition-colors">
                 REVANCHE
             </button>
@@ -197,11 +197,11 @@
                 <p class="text-sm text-p4-text2">L'adversaire souhaite une revanche !</p>
             </div>
             <div class="flex gap-2">
-                <button onclick="acceptRematch()"
+                <button onclick="uiAcceptRematch()"
                         class="flex-1 bg-p4-text text-white text-sm font-bold py-2.5 hover:opacity-90 transition-opacity">
                     Accepter
                 </button>
-                <button onclick="declineRematch()"
+                <button onclick="uiDeclineRematch()"
                         class="flex-1 border border-p4-border text-p4-text2 text-sm font-mono py-2.5 hover:border-p4-red hover:text-p4-red transition-colors">
                     Quitter
                 </button>
